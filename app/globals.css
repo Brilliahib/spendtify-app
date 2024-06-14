@@ -81,4 +81,19 @@
   .anim {
     @apply transition-all duration-300 ease-in-out;
   }
+  .pad-x {
+    padding: 0 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pad-x {
+    padding: 0 8%;
+  }
+}
+
+@media (min-width: 768px) {
+  .pad-x {
+    padding: 0 6%;
+  }
 }
