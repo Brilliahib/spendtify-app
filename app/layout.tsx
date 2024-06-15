@@ -9,6 +9,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>Spendtify App</title>
+      </head>
       <AuthProvider>
         <body className="bg-black text-foreground min-h-screen flex flex-col items-center w-full">
           {children}

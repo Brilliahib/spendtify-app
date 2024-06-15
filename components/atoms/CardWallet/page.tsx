@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { collection, query, onSnapshot } from "firebase/firestore";
-import { db } from "@/lib/firebase/firebase"; // Sesuaikan dengan cara Anda mengimpor Firebase Firestore
+import { collection, query, onSnapshot, where } from "firebase/firestore";
+import { db } from "@/lib/firebase/firebase";
+import { useAuth } from "@/app/context/AuthContext";
 
 type CardWalletProps = {
   variant: "income" | "balance" | "expenses" | "investments";
@@ -9,10 +10,17 @@ type CardWalletProps = {
 const CardWallet: React.FC<CardWalletProps> = ({ variant }) => {
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const user = useAuth();
 
   useEffect(() => {
+    if (!user.uid) {
+      setTotalAmount(0);
+      setLastUpdated(null);
+      return;
+    }
+
     const unsubscribe = onSnapshot(
-      query(collection(db, "transaction")),
+      query(collection(db, "transaction"), where("userId", "==", user.uid)),
       (snapshot) => {
         let total = 0;
         let latestTimestamp: Date | null = null;
