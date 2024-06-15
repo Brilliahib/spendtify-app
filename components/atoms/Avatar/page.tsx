@@ -26,7 +26,7 @@ const Profile = () => {
         </Avatar>
       </button>
       <div
-        className={`flex flex-col gap-y-2 rounded-md border bg-popover pb-2 pt-3 ${
+        className={`flex flex-col gap-y-2 rounded-md border bg-popover pb-2 pt-3 absolute md:right-24 md:top-20 right-4 top-16 ${
           isMenuOpen ? "" : "hidden"
         }`}
       >
