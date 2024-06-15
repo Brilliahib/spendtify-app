@@ -1,16 +1,28 @@
+"use client";
+import React, { useState } from "react";
 import Button from "@/components/atoms/Button/page";
 import CardWallet from "@/components/atoms/CardWallet/page";
-import AddItems from "@/components/molecules/Drawer/page";
+import AddItems from "@/components/molecules/Drawer/page"; // Pastikan path-nya sesuai dengan struktur proyek Anda
 import Form from "@/components/molecules/Form/page";
 import Navbar from "@/components/molecules/Navbar/page";
-import Table from "@/components/molecules/Table/page";
+import { DataTableDemo } from "@/components/molecules/Table/page";
 
 export default function Home() {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const handleCloseDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
+  const handleOpenDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+
   return (
     <>
       <main className="flex flex-col w-full flex-1">
         <Navbar />
-        <section className="pad-x">
+        <section className="pad-x mb-8">
           <div className="flex justify-between lg:py-8 py-4">
             <div className="flex items-center">
               <div className="flex flex-col space-y-2">
@@ -64,7 +76,7 @@ export default function Home() {
                 data-type="main"
                 className="text-foreground/60 text-sm font-base"
               >
-                Your Ballance
+                Your Balance
               </p>
               <h2
                 data-type="main"
@@ -100,12 +112,13 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex flex-col">
-                <AddItems />
+                <AddItems onClose={handleCloseDrawer} />{" "}
+                {/* Mengirimkan prop onClose ke AddItems */}
               </div>
             </div>
             <div className="rounded-md border border-border">
               <div className="relative w-full overflow-auto">
-                <Table />
+                <DataTableDemo />
               </div>
             </div>
           </div>
