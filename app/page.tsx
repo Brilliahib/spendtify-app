@@ -34,74 +34,10 @@ export default function Home() {
             </div>
           </div>
           <div className="lg:flex items-center grid grid-cols-2 grid-rows-2 lg:gap-8 gap-6 mb-12">
-            <CardWallet variant="income">
-              <span data-type="header" className="text-sm text-green-500">
-                +10% vs last year
-              </span>
-              <p
-                data-type="main"
-                className="text-foreground/60 text-sm font-base"
-              >
-                Total Income
-              </p>
-              <h2
-                data-type="main"
-                className="lg:text-3xl text-lg font-semibold"
-              >
-                Rp. 250.000
-              </h2>
-            </CardWallet>
-            <CardWallet variant="expenses">
-              <span data-type="header" className="text-sm text-red-500">
-                -10% vs last year
-              </span>
-              <p
-                data-type="main"
-                className="text-foreground/60 text-sm font-base"
-              >
-                Total Expenses
-              </p>
-              <h2
-                data-type="main"
-                className="lg:text-3xl text-lg font-semibold"
-              >
-                Rp. 250.000
-              </h2>
-            </CardWallet>
-            <CardWallet variant="ballance">
-              <span data-type="header" className="text-sm text-green-500">
-                +10% vs last year
-              </span>
-              <p
-                data-type="main"
-                className="text-foreground/60 text-sm font-base"
-              >
-                Your Balance
-              </p>
-              <h2
-                data-type="main"
-                className="lg:text-3xl text-lg font-semibold"
-              >
-                Rp. 250.000
-              </h2>
-            </CardWallet>
-            <CardWallet variant="investments">
-              <span data-type="header" className="text-sm text-yellow-500">
-                +10% vs last year
-              </span>
-              <p
-                data-type="main"
-                className="text-foreground/60 text-sm font-base"
-              >
-                Your Investments
-              </p>
-              <h2
-                data-type="main"
-                className="lg:text-3xl text-lg font-semibold"
-              >
-                Rp. 250.000
-              </h2>
-            </CardWallet>
+            <CardWallet variant="income" />
+            <CardWallet variant="expenses" />
+            <CardWallet variant="balance" />
+            <CardWallet variant="investments" />
           </div>
           <div className="flex flex-col mt-12">
             <div className="flex justify-between lg:py-8 py-4">
