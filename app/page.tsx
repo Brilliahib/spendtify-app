@@ -1,4 +1,6 @@
+import Button from "@/components/atoms/Button/page";
 import CardWallet from "@/components/atoms/CardWallet/page";
+import AddItems from "@/components/molecules/Drawer/page";
 import Form from "@/components/molecules/Form/page";
 import Navbar from "@/components/molecules/Navbar/page";
 import Table from "@/components/molecules/Table/page";
@@ -32,7 +34,7 @@ export default function Home() {
               </p>
               <h2
                 data-type="main"
-                className="lg:text-3xl text-xl font-semibold"
+                className="lg:text-3xl text-lg font-semibold"
               >
                 Rp. 250.000
               </h2>
@@ -49,7 +51,7 @@ export default function Home() {
               </p>
               <h2
                 data-type="main"
-                className="lg:text-3xl text-xl font-semibold"
+                className="lg:text-3xl text-lg font-semibold"
               >
                 Rp. 250.000
               </h2>
@@ -66,7 +68,7 @@ export default function Home() {
               </p>
               <h2
                 data-type="main"
-                className="lg:text-3xl text-xl font-semibold"
+                className="lg:text-3xl text-lg font-semibold"
               >
                 Rp. 250.000
               </h2>
@@ -83,7 +85,7 @@ export default function Home() {
               </p>
               <h2
                 data-type="main"
-                className="lg:text-3xl text-xl font-semibold"
+                className="lg:text-3xl text-lg font-semibold"
               >
                 Rp. 250.000
               </h2>
@@ -96,6 +98,9 @@ export default function Home() {
                 <p className="text-sm text-foreground/60">
                   You can store in several different pockets.
                 </p>
+              </div>
+              <div className="flex flex-col">
+                <AddItems />
               </div>
             </div>
             <div className="rounded-md border border-border">

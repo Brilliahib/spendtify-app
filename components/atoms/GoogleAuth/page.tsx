@@ -1,7 +1,14 @@
-const GoogleForm = () => {
+type ButtonGoogleProps = {
+  onClick?: () => void;
+};
+
+const GoogleForm = ({ onClick }: ButtonGoogleProps) => {
   return (
     <>
-      <button className="justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-1 w-full max-w-sm flex gap-x-2 items-center mb-3">
+      <button
+        className="justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-1 w-full max-w-sm flex gap-x-2 items-center mb-3"
+        onClick={onClick}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           x="0px"

@@ -1,14 +1,19 @@
 import { cn } from "@/lib/utils";
+import React from "react";
+
+type ButtonProps = {
+  children?: React.ReactNode;
+  className?: string;
+  variant?: "primary" | "secondary" | "destructive" | "outline";
+  onClick?: () => void; // Define onClick prop
+};
 
 const Button = ({
   children = "Button",
   className,
   variant = "primary",
-}: {
-  children?: React.ReactNode;
-  className?: string;
-  variant?: "primary" | "secondary" | "destructive" | "outline";
-}) => {
+  onClick, // Destructure onClick from props
+}: ButtonProps) => {
   const buttonVariant = {
     primary:
       "bg-primary text-primary-foreground hover:bg-primary/90 border-primary",
@@ -27,6 +32,7 @@ const Button = ({
         className,
         buttonVariant[variant]
       )}
+      onClick={onClick} // Assign onClick handler to button element
     >
       {children}
     </button>
