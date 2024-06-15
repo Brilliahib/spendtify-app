@@ -13,8 +13,9 @@ import {
 } from "@/components/ui/drawer";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "@/lib/firebase/firebase";
-import { useAuth } from "@/app/context/AuthContext"; // Impor hook useAuth dari modul autentikasi Firebase Anda
+import { useAuth } from "@/app/context/AuthContext"; // Import hook useAuth dari modul autentikasi Firebase Anda
 import { InputItems } from "@/components/InputItems/page";
+import { SelectItems } from "@/components/atoms/SelectItems/page";
 
 interface AddItemsProps {
   onClose: () => void;
@@ -34,6 +35,13 @@ const AddItems: React.FC<AddItemsProps> = ({ onClose }) => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+  };
+
+  const handleSelectChange = (value: string) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      category: value,
     }));
   };
 
@@ -88,12 +96,9 @@ const AddItems: React.FC<AddItemsProps> = ({ onClose }) => {
               />
             </div>
             <div className="mb-4">
-              <InputItems
+              <SelectItems
                 value={formData.category}
-                onChange={handleInputChange}
-                type="text"
-                name="category"
-                placeholder="Enter Category"
+                onChange={handleSelectChange}
               />
             </div>
             <div className="mb-4">

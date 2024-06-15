@@ -116,8 +116,6 @@ export default function Form() {
             Sign Up
           </a>
         </p>
-        <button onClick={handleLogout}>logout</button>
-        <a href="">{user?.displayName}</a>
       </div>
     </>
   );

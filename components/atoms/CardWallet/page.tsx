@@ -7,34 +7,55 @@ type CardWalletProps = {
 };
 
 const CardWallet: React.FC<CardWalletProps> = ({ variant }) => {
-  const [totalAmount, setTotalAmount] = useState<number>(0); // Mengubah menjadi 0 sebagai default value
+  const [totalAmount, setTotalAmount] = useState<number>(0);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
       query(collection(db, "transaction")),
       (snapshot) => {
         let total = 0;
+        let latestTimestamp: Date | null = null;
         snapshot.forEach((doc) => {
           const walletData = doc.data();
-          // Tambahkan amount jika category sesuai dengan variant yang diberikan
           if (walletData.category === variant) {
             const amount = parseFloat(walletData.amount);
             total += amount;
+            const timestamp = walletData.timestamp?.toDate();
+            if (
+              timestamp &&
+              (!latestTimestamp || timestamp > latestTimestamp)
+            ) {
+              latestTimestamp = timestamp;
+            }
           }
         });
         setTotalAmount(total);
+        setLastUpdated(latestTimestamp);
       }
     );
 
-    // Cleanup function
     return () => unsubscribe();
   }, [variant]);
 
   const cardColors = {
-    income: "bg-[#1c2e1b]",
-    balance: "bg-[#1c2e1b]",
-    expenses: "bg-[#301d1d]",
-    investments: "bg-[#2e2c1b]",
+    income: "bg-[#1c2e1b] text-green-500",
+    balance: "bg-[#1c2e1b] text-green-500",
+    expenses: "bg-[#301d1d] text-red-500",
+    investments: "bg-[#2e2c1b] text-yellow-500",
+  };
+
+  const formatLastUpdated = (date: Date | null) => {
+    if (!date) return "";
+    const now = new Date();
+    const diff = Math.floor((now.getTime() - date.getTime()) / 1000);
+    if (diff < 60) return `Last updated ${diff} seconds ago`;
+    const diffMinutes = Math.floor(diff / 60);
+    if (diffMinutes < 60) return `Last updated ${diffMinutes} minutes ago`;
+    const diffHours = Math.floor(diffMinutes / 60);
+    if (diffHours < 24) return `Last updated ${diffHours} hours ago`;
+    const diffDays = Math.floor(diffHours / 24);
+    return `Last updated ${diffDays} days ago`;
   };
 
   return (
@@ -43,14 +64,20 @@ const CardWallet: React.FC<CardWalletProps> = ({ variant }) => {
         <div
           className={`py-1 px-2 rounded-md text-sm inline-block ${cardColors[variant]}`}
         >
-          <span className="text-sm text-white">{variant}</span>
+          <span className="lg:text-sm text-xs">+ 20% vs last year</span>
         </div>
       </div>
       <div className="main-status flex-1 flex items-end">
         <div className="flex flex-col space-y-2">
-          <h2 className="lg:text-3xl text-lg font-semibold">
+          <p className="lg:text-sm capitalize text-xs">Total {variant}</p>
+          <h2 className="lg:text-3xl text-base font-semibold">
             Rp. {totalAmount.toLocaleString()}
           </h2>
+          {lastUpdated && (
+            <p className="text-xs text-muted-foreground/60">
+              {formatLastUpdated(lastUpdated)}
+            </p>
+          )}
         </div>
       </div>
     </div>

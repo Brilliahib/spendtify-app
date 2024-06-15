@@ -50,17 +50,9 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "category",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Category
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
+    header: "Category",
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("category")}</div>
+      <div className="capitalize">{row.getValue("category")}</div>
     ),
   },
   {
@@ -68,9 +60,9 @@ export const columns: ColumnDef<Payment>[] = [
     header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"));
-      const formatted = new Intl.NumberFormat("en-US", {
+      const formatted = new Intl.NumberFormat("id-ID", {
         style: "currency",
-        currency: "USD",
+        currency: "IDR",
       }).format(amount);
       return <div className="text-right font-medium">{formatted}</div>;
     },
