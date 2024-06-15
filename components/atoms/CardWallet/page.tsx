@@ -8,43 +8,41 @@ type CardWalletProps = {
 };
 
 const CardWallet: React.FC<CardWalletProps> = ({ variant }) => {
+  const user = useAuth();
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-  const user = useAuth();
 
   useEffect(() => {
-    if (!user.uid) {
-      setTotalAmount(0);
-      setLastUpdated(null);
-      return;
-    }
+    const q = query(collection(db, "transaction"));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      let total = 0;
+      let latestTimestamp: Date | null = null;
 
-    const unsubscribe = onSnapshot(
-      query(collection(db, "transaction"), where("userId", "==", user.uid)),
-      (snapshot) => {
-        let total = 0;
-        let latestTimestamp: Date | null = null;
-        snapshot.forEach((doc) => {
-          const walletData = doc.data();
-          if (walletData.category === variant) {
-            const amount = parseFloat(walletData.amount);
+      snapshot.forEach((doc) => {
+        const walletData = doc.data();
+        console.log("Transaction Data:", walletData);
+
+        if (walletData.category === variant) {
+          const amount = parseFloat(walletData.amount);
+          if (!isNaN(amount)) {
             total += amount;
-            const timestamp = walletData.timestamp?.toDate();
-            if (
-              timestamp &&
-              (!latestTimestamp || timestamp > latestTimestamp)
-            ) {
-              latestTimestamp = timestamp;
-            }
           }
-        });
-        setTotalAmount(total);
-        setLastUpdated(latestTimestamp);
-      }
-    );
+          const timestamp = walletData.timestamp?.toDate();
+          if (timestamp && (!latestTimestamp || timestamp > latestTimestamp)) {
+            latestTimestamp = timestamp;
+          }
+        }
+      });
+
+      console.log("Total Amount:", total);
+      console.log("Latest Timestamp:", latestTimestamp);
+
+      setTotalAmount(total);
+      setLastUpdated(latestTimestamp);
+    });
 
     return () => unsubscribe();
-  }, [variant]);
+  }, [user, variant]);
 
   const cardColors = {
     income: "bg-[#1c2e1b] text-green-500",
