@@ -8,20 +8,23 @@ type CardWalletProps = {
 };
 
 const CardWallet: React.FC<CardWalletProps> = ({ variant }) => {
-  const user = useAuth();
+  const { user } = useAuth();
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
   useEffect(() => {
-    const q = query(collection(db, "transaction"));
+    if (!user) return;
+
+    const q = query(
+      collection(db, "transaction"),
+      where("userId", "==", user.uid)
+    );
     const unsubscribe = onSnapshot(q, (snapshot) => {
       let total = 0;
       let latestTimestamp: Date | null = null;
 
       snapshot.forEach((doc) => {
         const walletData = doc.data();
-        console.log("Transaction Data:", walletData);
-
         if (walletData.category === variant) {
           const amount = parseFloat(walletData.amount);
           if (!isNaN(amount)) {
@@ -33,9 +36,6 @@ const CardWallet: React.FC<CardWalletProps> = ({ variant }) => {
           }
         }
       });
-
-      console.log("Total Amount:", total);
-      console.log("Latest Timestamp:", latestTimestamp);
 
       setTotalAmount(total);
       setLastUpdated(latestTimestamp);
