@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { db } from "@/lib/firebase/firebase";
 import { useAuth } from "@/app/context/AuthContext";
+import { SkeletonCard } from "../Skeleton/page";
 
 type CardWalletProps = {
   variant: "income" | "balance" | "expenses" | "investments";
@@ -11,6 +12,7 @@ const CardWallet: React.FC<CardWalletProps> = ({ variant }) => {
   const { user } = useAuth();
   const [totalAmount, setTotalAmount] = useState<number>(0);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (!user) return;
@@ -39,6 +41,7 @@ const CardWallet: React.FC<CardWalletProps> = ({ variant }) => {
 
       setTotalAmount(total);
       setLastUpdated(latestTimestamp);
+      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -63,6 +66,10 @@ const CardWallet: React.FC<CardWalletProps> = ({ variant }) => {
     const diffDays = Math.floor(diffHours / 24);
     return `Last updated ${diffDays} days ago`;
   };
+
+  if (loading) {
+    return <SkeletonCard />;
+  }
 
   return (
     <div className="card p-5 bg-[#191919] rounded-xl lg:min-h-[250px] min-h-[200px] flex flex-col">
