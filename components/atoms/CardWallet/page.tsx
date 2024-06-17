@@ -68,7 +68,11 @@ const CardWallet: React.FC<CardWalletProps> = ({ variant }) => {
   };
 
   if (loading) {
-    return <SkeletonCard />;
+    return (
+      <div className="flex gap-x-4">
+        <SkeletonCard />
+      </div>
+    );
   }
 
   return (
