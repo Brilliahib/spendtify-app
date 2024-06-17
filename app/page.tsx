@@ -6,6 +6,8 @@ import AddItems from "@/components/molecules/Drawer/page"; // Pastikan path-nya 
 import Form from "@/components/molecules/Form/page";
 import Navbar from "@/components/molecules/Navbar/page";
 import { DataTableDemo } from "@/components/molecules/Table/page";
+import StatusBadge from "@/components/atoms/Badges/page";
+import Window from "@/components/organisms/Window/page";
 
 export default function Home() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -20,43 +22,25 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex flex-col w-full flex-1">
+      <main className="flex flex-col w-full flex-1 h-screen">
         <Navbar />
-        <section className="pad-x mb-8">
-          <div className="flex justify-between lg:py-8 py-4">
-            <div className="flex items-center">
-              <div className="flex flex-col space-y-2">
-                <span className="text-lg font-bold">Your Wallet</span>
-                <p className="text-sm text-foreground/60">
-                  You can store in several different pockets.
-                </p>
-              </div>
-            </div>
+        <section className="pad-x mb-8 lg:py-24 py-12">
+          <div className="text-center flex justify-center mb-3">
+            <StatusBadge status="success" className="w-fit">
+              E-Wallet Real Time
+            </StatusBadge>
           </div>
-          <div className="lg:flex items-center grid grid-cols-2 grid-rows-2 lg:gap-8 gap-6 mb-12">
-            <CardWallet variant="income" />
-            <CardWallet variant="expenses" />
-            <CardWallet variant="balance" />
-            <CardWallet variant="investments" />
+          <div className="text-center space-y-4 md:mb-24 mb-12">
+            <h1 className="text-center text-2xl font-bold leading-tight tracking-tighter md:text-5xl lg:leading-[1.1]">
+              Build and manage your salary
+            </h1>
+            <p className="max-w-3xl text-center md:text-lg text-sm font-light text-foreground/60 inline-block">
+              A free financial assistant that is always ready and available to
+              help you with any financial matters at any time of the day.
+            </p>
           </div>
-          <div className="flex flex-col mt-12">
-            <div className="flex justify-between lg:py-8 py-4">
-              <div className="flex flex-col space-y-2">
-                <span className="text-lg font-bold">Your Transactions</span>
-                <p className="text-sm text-foreground/60">
-                  You can store in several different pockets.
-                </p>
-              </div>
-              <div className="flex flex-col">
-                <AddItems onClose={handleCloseDrawer} />{" "}
-                {/* Mengirimkan prop onClose ke AddItems */}
-              </div>
-            </div>
-            <div className="rounded-md border border-border">
-              <div className="relative w-full overflow-auto">
-                <DataTableDemo />
-              </div>
-            </div>
+          <div>
+            <Window />
           </div>
         </section>
       </main>
